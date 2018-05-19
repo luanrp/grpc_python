@@ -6,6 +6,8 @@ This a demo to show how to make a message push channel based on grpc. One or sev
 ## Background 
 Based on my specific requirements, there is a cloud server hosting my SAAS platform, and there are several hosts deployed in different locations. Messages will be submitted via APP/mobile to SAAS and then routed to the hosts. 
 
+My 1st chosen is grpc, but after searching github, I found nth. that matches the push mode; or they are all 'while loop' without any condition control. So I decide to work out one.  
+
 In Java, a netty based channel works perfect on such scenario. With Python, I guess grpc will be the fastest way. Leave me message if there are better solutions.
 
 ## Design
@@ -41,6 +43,15 @@ Once registered, the message will be received:
         for r in response:
             print(r.message)
 ```
+
+
+## Detailed Information
+- Here is the command to generated Python code:
+    ```angular2html
+    python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./push.proto
+    
+    ```
+
 
 ## TODO
 This is a quick demo; more work should be done if you wanna make a robust product: e.g., 
