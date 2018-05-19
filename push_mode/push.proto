@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-
-// The greeting service definition.
 service MessageSync {
   // message producer
   rpc SubmitMessage (SubmitRequest) returns (SubmitReply) {}
@@ -10,7 +8,6 @@ service MessageSync {
   rpc PushMessageStream(ConnRequest) returns (stream MessageReply){}
 }
 
-// The request message containing the user's name.
 message SubmitRequest {
   string channel = 1;
   string message = 2;
@@ -20,7 +17,7 @@ message SubmitReply {
   string reply = 1;
 }
 
-// The response message containing the greetings
+
 message ConnRequest {
   string channel = 1;
 }

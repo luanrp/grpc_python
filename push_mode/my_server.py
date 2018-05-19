@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-from time import sleep, time
+from time import sleep
 import grpc
 from concurrent import futures
 
