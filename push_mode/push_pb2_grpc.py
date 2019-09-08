@@ -5,8 +5,8 @@ from push_mode import push_pb2 as push__pb2
 
 
 class MessageSyncStub(object):
-  """The greeting service definition.
-  """
+  # missing associated documentation comment in .proto file
+  pass
 
   def __init__(self, channel):
     """Constructor.
@@ -24,11 +24,16 @@ class MessageSyncStub(object):
         request_serializer=push__pb2.ConnRequest.SerializeToString,
         response_deserializer=push__pb2.MessageReply.FromString,
         )
+    self.LogIn = channel.unary_unary(
+        '/MessageSync/LogIn',
+        request_serializer=push__pb2.LogInRequest.SerializeToString,
+        response_deserializer=push__pb2.LogInReply.FromString,
+        )
 
 
 class MessageSyncServicer(object):
-  """The greeting service definition.
-  """
+  # missing associated documentation comment in .proto file
+  pass
 
   def SubmitMessage(self, request, context):
     """message producer
@@ -40,6 +45,13 @@ class MessageSyncServicer(object):
   def PushMessageStream(self, request, context):
     """message consume, push mode
     """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def LogIn(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -56,6 +68,11 @@ def add_MessageSyncServicer_to_server(servicer, server):
           servicer.PushMessageStream,
           request_deserializer=push__pb2.ConnRequest.FromString,
           response_serializer=push__pb2.MessageReply.SerializeToString,
+      ),
+      'LogIn': grpc.unary_unary_rpc_method_handler(
+          servicer.LogIn,
+          request_deserializer=push__pb2.LogInRequest.FromString,
+          response_serializer=push__pb2.LogInReply.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
