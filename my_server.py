@@ -7,8 +7,7 @@ from concurrent import futures
 
 import threading
 
-from push_mode.push_pb2 import SubmitReply, MessageReply
-from push_mode.push_pb2_grpc import MessageSyncServicer, add_MessageSyncServicer_to_server
+from push_mode import SubmitReply, MessageReply, MessageSyncServicer, add_MessageSyncServicer_to_server
 
 
 class MessageSync(MessageSyncServicer, threading.Thread):
@@ -20,10 +19,10 @@ class MessageSync(MessageSyncServicer, threading.Thread):
         self.message_stack_map = {}
 
     def SubmitMessage(self, request, context):
-        if not self.cond_map.has_key(request.channel):
+        if request.channel not in self.cond_map:
             self.cond_map[request.channel] = threading.Condition()
 
-        if not self.message_stack_map.has_key(request.channel):
+        if request.channel not in self.message_stack_map:
             self.message_stack_map[request.channel] = list()
         self.message_stack_map[request.channel].append(request.message)
 
@@ -33,12 +32,12 @@ class MessageSync(MessageSyncServicer, threading.Thread):
 
     def PushMessageStream(self, request, context):
         print(request.channel)
-        if not self.cond_map.has_key(request.channel):
+        if request.channel not in self.cond_map:
             self.cond_map[request.channel] = threading.Condition()
 
         while True:
             self.count += 1
-            if self.message_stack_map.has_key(request.channel) and self.message_stack_map[request.channel].__len__():
+            if request.channel in self.message_stack_map and self.message_stack_map[request.channel].__len__():
                 yield MessageReply(message=str(self.message_stack_map[request.channel].pop()))
 
             with self.cond_map[request.channel]:
@@ -51,7 +50,7 @@ def serve():
     m = MessageSync(cond)
 
     add_MessageSyncServicer_to_server(m, grpcserver)
-    grpcserver.add_insecure_port('0.0.0.0:8081')
+    grpcserver.add_insecure_port('0.0.0.0:8080')
     grpcserver.start()
 
     sleep(1000000)
