@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\npush.proto\"l\n\rSubmitRequest\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x0e\n\x06header\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\x12\x0c\n\x04time\x18\x06 \x01(\t\"\x1c\n\x0bSubmitReply\x12\r\n\x05reply\x18\x01 \x01(\t\"\x1e\n\x0b\x43onnRequest\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\"Z\n\x0cMessageReply\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0e\n\x06header\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x0c\n\x04time\x18\x05 \x01(\t\"+\n\x0cLogInRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"\x1b\n\nLogInReply\x12\r\n\x05reply\x18\x01 \x01(\t2\x9b\x01\n\x0bMessageSync\x12/\n\rSubmitMessage\x12\x0e.SubmitRequest\x1a\x0c.SubmitReply\"\x00\x12\x34\n\x11PushMessageStream\x12\x0c.ConnRequest\x1a\r.MessageReply\"\x00\x30\x01\x12%\n\x05LogIn\x12\r.LogInRequest\x1a\x0b.LogInReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\npush.proto\"l\n\rSubmitRequest\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x0e\n\x06header\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\x12\x0c\n\x04time\x18\x06 \x01(\t\"\x1c\n\x0bSubmitReply\x12\r\n\x05reply\x18\x01 \x01(\t\"\x1e\n\x0b\x43onnRequest\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\"Z\n\x0cMessageReply\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0e\n\x06header\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x0c\n\x04time\x18\x05 \x01(\t\"+\n\x0cLogInRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"\x1b\n\nLogInReply\x12\r\n\x05reply\x18\x01 \x01(\t\"\x1e\n\x0eHistoryRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1f\n\x0cHistoryReply\x12\x0f\n\x07message\x18\x01 \x01(\t2\xcb\x01\n\x0bMessageSync\x12/\n\rSubmitMessage\x12\x0e.SubmitRequest\x1a\x0c.SubmitReply\"\x00\x12\x34\n\x11PushMessageStream\x12\x0c.ConnRequest\x1a\r.MessageReply\"\x00\x30\x01\x12%\n\x05LogIn\x12\r.LogInRequest\x1a\x0b.LogInReply\"\x00\x12.\n\nGetHistory\x12\x0f.HistoryRequest\x1a\r.HistoryReply\"\x00\x62\x06proto3')
 )
 
 
@@ -281,12 +281,76 @@ _LOGINREPLY = _descriptor.Descriptor(
   serialized_end=350,
 )
 
+
+_HISTORYREQUEST = _descriptor.Descriptor(
+  name='HistoryRequest',
+  full_name='HistoryRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='HistoryRequest.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=352,
+  serialized_end=382,
+)
+
+
+_HISTORYREPLY = _descriptor.Descriptor(
+  name='HistoryReply',
+  full_name='HistoryReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='message', full_name='HistoryReply.message', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=384,
+  serialized_end=415,
+)
+
 DESCRIPTOR.message_types_by_name['SubmitRequest'] = _SUBMITREQUEST
 DESCRIPTOR.message_types_by_name['SubmitReply'] = _SUBMITREPLY
 DESCRIPTOR.message_types_by_name['ConnRequest'] = _CONNREQUEST
 DESCRIPTOR.message_types_by_name['MessageReply'] = _MESSAGEREPLY
 DESCRIPTOR.message_types_by_name['LogInRequest'] = _LOGINREQUEST
 DESCRIPTOR.message_types_by_name['LogInReply'] = _LOGINREPLY
+DESCRIPTOR.message_types_by_name['HistoryRequest'] = _HISTORYREQUEST
+DESCRIPTOR.message_types_by_name['HistoryReply'] = _HISTORYREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SubmitRequest = _reflection.GeneratedProtocolMessageType('SubmitRequest', (_message.Message,), {
@@ -331,6 +395,20 @@ LogInReply = _reflection.GeneratedProtocolMessageType('LogInReply', (_message.Me
   })
 _sym_db.RegisterMessage(LogInReply)
 
+HistoryRequest = _reflection.GeneratedProtocolMessageType('HistoryRequest', (_message.Message,), {
+  'DESCRIPTOR' : _HISTORYREQUEST,
+  '__module__' : 'push_pb2'
+  # @@protoc_insertion_point(class_scope:HistoryRequest)
+  })
+_sym_db.RegisterMessage(HistoryRequest)
+
+HistoryReply = _reflection.GeneratedProtocolMessageType('HistoryReply', (_message.Message,), {
+  'DESCRIPTOR' : _HISTORYREPLY,
+  '__module__' : 'push_pb2'
+  # @@protoc_insertion_point(class_scope:HistoryReply)
+  })
+_sym_db.RegisterMessage(HistoryReply)
+
 
 
 _MESSAGESYNC = _descriptor.ServiceDescriptor(
@@ -339,8 +417,8 @@ _MESSAGESYNC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=353,
-  serialized_end=508,
+  serialized_start=418,
+  serialized_end=621,
   methods=[
   _descriptor.MethodDescriptor(
     name='SubmitMessage',
@@ -367,6 +445,15 @@ _MESSAGESYNC = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_LOGINREQUEST,
     output_type=_LOGINREPLY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetHistory',
+    full_name='MessageSync.GetHistory',
+    index=3,
+    containing_service=None,
+    input_type=_HISTORYREQUEST,
+    output_type=_HISTORYREPLY,
     serialized_options=None,
   ),
 ])
