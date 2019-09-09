@@ -4,7 +4,7 @@ from concurrent import futures
 
 import threading
 
-from push_mode import SubmitReply, MessageReply, MessageSyncServicer, add_MessageSyncServicer_to_server, LogInReply
+from push_mode import SubmitReply, MessageReply, MessageSyncServicer, add_MessageSyncServicer_to_server, LogInReply, HistoryReply
 
 
 class MessageSync(MessageSyncServicer, threading.Thread):
@@ -13,9 +13,9 @@ class MessageSync(MessageSyncServicer, threading.Thread):
         self.cond = cond
         self.amount_users = 0
         self.users = []
-        self.count = 1
         self.cond_map = {}
         self.message_stack_map = {}
+        self.history = ""
 
     def SubmitMessage(self, request, context):
         if request.name not in self.users:
@@ -28,6 +28,7 @@ class MessageSync(MessageSyncServicer, threading.Thread):
 
         text = f"{request.time}. {request.name} написал: {request.header}.\n{request.message}"
         self.message_stack_map[request.channel].append(text)
+        self.history += text+'\n'
 
         with self.cond_map[request.channel]:
             self.cond_map[request.channel].notifyAll()
@@ -39,7 +40,6 @@ class MessageSync(MessageSyncServicer, threading.Thread):
             self.cond_map[request.channel] = threading.Condition()
 
         while True:
-            self.count += 1
             if request.channel in self.message_stack_map and self.message_stack_map[request.channel].__len__():
                 yield MessageReply(message=str(self.message_stack_map[request.channel][0]))
                 self.amount_users -= 1
@@ -51,6 +51,9 @@ class MessageSync(MessageSyncServicer, threading.Thread):
         if request.name not in self.users:
             self.users.append(request.name)
         return LogInReply(reply="Successful log in")
+
+    def GetHistory(self, request, context):
+        return HistoryReply(message="Ранее опубликованные объявления:\n"+self.history)
 
 def serve():
     grpcserver = grpc.server(futures.ThreadPoolExecutor(max_workers=4))

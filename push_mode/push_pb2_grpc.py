@@ -29,6 +29,11 @@ class MessageSyncStub(object):
         request_serializer=push__pb2.LogInRequest.SerializeToString,
         response_deserializer=push__pb2.LogInReply.FromString,
         )
+    self.GetHistory = channel.unary_unary(
+        '/MessageSync/GetHistory',
+        request_serializer=push__pb2.HistoryRequest.SerializeToString,
+        response_deserializer=push__pb2.HistoryReply.FromString,
+        )
 
 
 class MessageSyncServicer(object):
@@ -56,6 +61,13 @@ class MessageSyncServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetHistory(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_MessageSyncServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -73,6 +85,11 @@ def add_MessageSyncServicer_to_server(servicer, server):
           servicer.LogIn,
           request_deserializer=push__pb2.LogInRequest.FromString,
           response_serializer=push__pb2.LogInReply.SerializeToString,
+      ),
+      'GetHistory': grpc.unary_unary_rpc_method_handler(
+          servicer.GetHistory,
+          request_deserializer=push__pb2.HistoryRequest.FromString,
+          response_serializer=push__pb2.HistoryReply.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

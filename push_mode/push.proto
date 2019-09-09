@@ -8,6 +8,7 @@ service MessageSync {
   rpc PushMessageStream(ConnRequest) returns (stream MessageReply){}
 
   rpc LogIn(LogInRequest) returns (LogInReply){}
+  rpc GetHistory(HistoryRequest) returns (HistoryReply){}
 }
 
 message SubmitRequest {
@@ -42,4 +43,11 @@ message LogInRequest{
 
 message LogInReply{
   string reply = 1;
+}
+
+message HistoryRequest{
+    string name = 1;
+}
+message HistoryReply{
+    string message = 1;
 }

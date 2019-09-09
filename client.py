@@ -3,7 +3,7 @@ import grpc
 import threading
 
 from time import sleep
-from push_mode import SubmitRequest, MessageSyncStub, ConnRequest, LogInRequest
+from push_mode import SubmitRequest, MessageSyncStub, ConnRequest, LogInRequest, HistoryRequest
 
 
 def listen(client):
@@ -23,6 +23,7 @@ def run():
     name = input("Введите ваше имя: ")
     response = client.LogIn(LogInRequest(name=name))
     print(response.reply)
+    print(client.GetHistory(HistoryRequest(name=name)).message)
 
     while True:
         header = input("Bведите заголовок: ")
