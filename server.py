@@ -10,16 +10,13 @@ from push_mode import SubmitReply, MessageReply, MessageSyncServicer, add_Messag
 class MessageSync(MessageSyncServicer, threading.Thread):
     def __init__(self, cond):
         super(MessageSync, self).__init__()
-        self.cond = cond
         self.amount_users = 0
         self.users = []
-        self.cond_map = {}
         self.message_stack_map = {}
         self.history = ""
 
     def SubmitMessage(self, request, context):
         if request.name not in self.users:
-            self.cond_map[request.channel] = threading.Condition()
             self.amount_users += 1
             self.users.append(request.name)
 
@@ -30,14 +27,10 @@ class MessageSync(MessageSyncServicer, threading.Thread):
         self.message_stack_map[request.channel].append(text)
         self.history += text+'\n'
 
-        with self.cond_map[request.channel]:
-            self.cond_map[request.channel].notifyAll()
         return SubmitReply(reply='received')
 
     def PushMessageStream(self, request, context):
         print(request.channel)
-        if request.channel not in self.cond_map:
-            self.cond_map[request.channel] = threading.Condition()
 
         while True:
             if request.channel in self.message_stack_map and self.message_stack_map[request.channel].__len__():
