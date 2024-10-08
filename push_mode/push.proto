@@ -6,22 +6,48 @@ service MessageSync {
 
   // message consume, push mode
   rpc PushMessageStream(ConnRequest) returns (stream MessageReply){}
+
+  rpc LogIn(LogInRequest) returns (LogInReply){}
+  rpc GetHistory(HistoryRequest) returns (HistoryReply){}
 }
 
 message SubmitRequest {
   string channel = 1;
-  string message = 2;
+  string name = 2;
+  string email = 3;
+  string header = 4;
+  string message = 5;
+  string time = 6;
 }
 
 message SubmitReply {
   string reply = 1;
 }
 
-
 message ConnRequest {
   string channel = 1;
 }
 
 message MessageReply{
-  string message = 1;
+  string name = 1;
+  string email = 2;
+  string header = 3;
+  string message = 4;
+  string time = 5;
+}
+
+message LogInRequest{
+  string email = 1;
+  string name = 2;
+}
+
+message LogInReply{
+  string reply = 1;
+}
+
+message HistoryRequest{
+    string name = 1;
+}
+message HistoryReply{
+    string message = 1;
 }
